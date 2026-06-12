@@ -5,6 +5,7 @@ import com.rsscripting.serveradmin.gui.RSMenuHolder;
 import com.rsscripting.serveradmin.gui.CreeperMenu;
 import com.rsscripting.serveradmin.RSServerAdmin;
 import com.rsscripting.serveradmin.settings.SettingKey;
+import com.rsscripting.serveradmin.settings.SettingKey;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -121,6 +122,46 @@ public class InventoryListener implements Listener {
                     case 22 -> player.openInventory(
                             com.rsscripting.serveradmin.gui.MainMenu.create()
                     );
+
+                }
+
+            }
+
+            case "KEEP_INVENTORY" -> {
+
+                if (!(event.getWhoClicked() instanceof Player player)) {
+                    return;
+                }
+
+                switch (event.getSlot()) {
+
+                    case 0 -> player.openInventory(
+                            com.rsscripting.serveradmin.gui.MainMenu.create()
+                    );
+
+                    case 4 -> {
+
+                        try {
+
+                            RSServerAdmin.getInstance()
+                                    .getSettingsDAO()
+                                    .toggleDefault(
+                                            SettingKey.KEEP_INVENTORY_NEW_WORLD
+                                    );
+
+                            player.openInventory(
+                                    KeepInventoryMenu.create(
+                                            holder.getPage()
+                                    )
+                            );
+
+                        } catch (Exception ex) {
+
+                            ex.printStackTrace();
+
+                        }
+
+                    }
 
                 }
 

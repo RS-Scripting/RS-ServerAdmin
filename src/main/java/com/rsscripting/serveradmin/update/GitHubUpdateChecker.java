@@ -56,9 +56,7 @@ public class GitHubUpdateChecker {
                                 )) {
 
                                     plugin.getLogger().info(
-                                            "Running latest version ("
-                                                    + currentVersion
-                                                    + ")."
+                                            "RS-ServerAdmin is up to date."
                                     );
 
                                 } else {

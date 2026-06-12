@@ -102,7 +102,9 @@ public class KeepInventoryMenu {
 
         ItemStack item =
                 new ItemStack(
-                        Material.CHEST
+                        enabled
+                                ? Material.ENDER_CHEST
+                                : Material.CHEST
                 );
 
         ItemMeta meta =
@@ -158,7 +160,7 @@ public class KeepInventoryMenu {
                 dao.getAllWorlds();
 
         int start =
-                page * WORLDS_PER_PAGE;
+                (page - 1) * WORLDS_PER_PAGE;
 
         int slot =
                 9;
@@ -177,7 +179,9 @@ public class KeepInventoryMenu {
 
             ItemStack item =
                     new ItemStack(
-                            Material.CHEST
+                            enabled
+                                    ? Material.LIME_SHULKER_BOX
+                                    : Material.RED_SHULKER_BOX
                     );
 
             ItemMeta meta =
@@ -201,14 +205,6 @@ public class KeepInventoryMenu {
 
                 item.setItemMeta(
                         meta
-                );
-
-            }
-
-            if (enabled) {
-
-                GUIUtils.addGlow(
-                        item
                 );
 
             }
