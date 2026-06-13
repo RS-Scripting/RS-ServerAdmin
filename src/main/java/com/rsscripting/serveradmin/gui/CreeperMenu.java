@@ -156,7 +156,7 @@ public class CreeperMenu {
         }
 
         inventory.setItem(
-                22,
+                4,
                 back
         );
 

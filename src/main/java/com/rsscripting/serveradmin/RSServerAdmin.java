@@ -9,8 +9,10 @@ import com.rsscripting.serveradmin.security.SecurityManager;
 import com.rsscripting.serveradmin.listeners.InventoryListener;
 import com.rsscripting.serveradmin.listeners.CreeperEntityDamageListener;
 import com.rsscripting.serveradmin.update.GitHubUpdateChecker;
+import com.rsscripting.serveradmin.listeners.WorldLoadListener;
 
 import com.rsscripting.serveradmin.settings.SettingKey;
+import com.rsscripting.serveradmin.worlds.WorldsDAO;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -24,6 +26,7 @@ public class RSServerAdmin extends JavaPlugin {
     private DatabaseManager databaseManager;
     private SettingsDAO settingsDAO;
     private SecurityManager securityManager;
+    private WorldsDAO worldsDAO;
 
     @Override
     public void onEnable() {
@@ -44,6 +47,8 @@ public class RSServerAdmin extends JavaPlugin {
 
             keepInventoryDAO = new KeepInventoryDAO(databaseManager);
 
+            worldsDAO = new WorldsDAO(databaseManager);
+
             securityManager = new SecurityManager(this);
 
             boolean keepInventoryDefault =
@@ -52,6 +57,10 @@ public class RSServerAdmin extends JavaPlugin {
                     );
 
             for (World world : Bukkit.getWorlds()) {
+
+                worldsDAO.ensureWorldExists(
+                        world.getName()
+                );
 
                 keepInventoryDAO.ensureWorldExists(
                         world.getName(),
@@ -89,6 +98,11 @@ public class RSServerAdmin extends JavaPlugin {
                     this
             );
 
+            getServer().getPluginManager().registerEvents(
+                    new WorldLoadListener(),
+                    this
+            );
+
 
         } catch (Exception ex) {
 
@@ -120,17 +134,24 @@ public class RSServerAdmin extends JavaPlugin {
         getLogger().info("RS-ServerAdmin disabled.");
     }
 
-    public KeepInventoryDAO getKeepInventoryDAO() {return keepInventoryDAO;}
+    public KeepInventoryDAO getKeepInventoryDAO() {
+        return keepInventoryDAO;}
     public static RSServerAdmin getInstance() {
+
         return instance;
     }
     public DatabaseManager getDatabaseManager() {
+
         return databaseManager;
     }
     public SettingsDAO getSettingsDAO() {
+
         return settingsDAO;
     }
+    public WorldsDAO getWorldsDAO() {
+        return worldsDAO;}
     public SecurityManager getSecurityManager() {
+
         return securityManager;
     }
 

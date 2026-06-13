@@ -2,7 +2,7 @@ package com.rsscripting.serveradmin.gui;
 
 import com.rsscripting.serveradmin.RSServerAdmin;
 import com.rsscripting.serveradmin.keepinventory.KeepInventoryDAO;
-import com.rsscripting.serveradmin.gui.RSMenuHolder;
+import com.rsscripting.serveradmin.worlds.WorldsDAO;
 import com.rsscripting.serveradmin.settings.SettingKey;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -83,7 +83,7 @@ public class KeepInventoryMenu {
         }
 
         inventory.setItem(
-                0,
+                3,
                 item
         );
 
@@ -121,8 +121,8 @@ public class KeepInventoryMenu {
                             "§7Controls newly detected worlds",
                             "",
                             enabled
-                                    ? "§aCurrent: New worlds keep inventory"
-                                    : "§cCurrent: New worlds drop inventory"
+                                    ? "§aCurrent: New worlds, Players keep inventory on death"
+                                    : "§cCurrent: New worlds, Players drop inventory on death"
                     )
             );
 
@@ -141,7 +141,7 @@ public class KeepInventoryMenu {
         }
 
         inventory.setItem(
-                4,
+                5,
                 item
         );
 
@@ -157,7 +157,9 @@ public class KeepInventoryMenu {
                         .getKeepInventoryDAO();
 
         List<String> worlds =
-                dao.getAllWorlds();
+                RSServerAdmin.getInstance()
+                        .getWorldsDAO()
+                        .getAllWorlds();
 
         int start =
                 (page - 1) * WORLDS_PER_PAGE;

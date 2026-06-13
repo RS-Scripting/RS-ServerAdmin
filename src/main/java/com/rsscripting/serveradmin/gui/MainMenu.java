@@ -33,6 +33,28 @@ public class MainMenu {
             creeper.setItemMeta(creeperMeta);
         }
 
+        ItemStack scanWorlds =
+                new ItemStack(
+                        Material.COMPASS
+                );
+
+        ItemMeta scanMeta =
+                scanWorlds.getItemMeta();
+
+        if (scanMeta != null) {
+            scanMeta.setDisplayName("§aRescan Worlds");
+
+            scanMeta.setLore(java.util.List.of(
+                    "§7Rescan for new worlds",
+                    "",
+                    "§eClick to rescan."
+            ));
+
+            scanWorlds.setItemMeta(scanMeta);
+        }
+
+        inventory.setItem(4, scanWorlds);
+
         inventory.setItem(11, creeper);
 
         ItemStack keepInventory =
