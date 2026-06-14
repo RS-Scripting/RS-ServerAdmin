@@ -1,21 +1,20 @@
 package com.rsscripting.serveradmin.gui;
 
 import com.rsscripting.serveradmin.RSServerAdmin;
-import com.rsscripting.serveradmin.keepinventory.KeepInventoryDAO;
+import com.rsscripting.serveradmin.creeper.CreeperSettingsDAO;
 import com.rsscripting.serveradmin.settings.SettingKey;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class KeepInventoryMenu {
+public class CreeperBlockDamageMenu {
 
     private static final int WORLDS_PER_PAGE = 45;
 
@@ -25,7 +24,7 @@ public class KeepInventoryMenu {
 
         RSMenuHolder holder =
                 new RSMenuHolder(
-                        "KEEP_INVENTORY"
+                        "CREEPER_BLOCK_DAMAGE"
                 );
 
         holder.setPage(
@@ -36,7 +35,7 @@ public class KeepInventoryMenu {
                 Bukkit.createInventory(
                         holder,
                         54,
-                        "Keep Inventory"
+                        "Block Damage"
                 );
 
         GUIUtils.fillEmptySlots(
@@ -99,7 +98,7 @@ public class KeepInventoryMenu {
                 RSServerAdmin.getInstance()
                         .getSettingsDAO()
                         .getDefault(
-                                SettingKey.KEEP_INVENTORY_NEW_WORLD
+                                SettingKey.CREEPER_BLOCK_DAMAGE
                         );
 
         ItemStack item =
@@ -123,21 +122,13 @@ public class KeepInventoryMenu {
                             "§7Controls newly detected worlds",
                             "",
                             enabled
-                                    ? "§aCurrent: New worlds, Players keep inventory on death"
-                                    : "§cCurrent: New worlds, Players drop inventory on death"
+                                    ? "§aCurrent: New worlds allow creeper block damage"
+                                    : "§cCurrent: New worlds block creeper block damage"
                     )
             );
 
             item.setItemMeta(
                     meta
-            );
-
-        }
-
-        if (enabled) {
-
-            GUIUtils.addGlow(
-                    item
             );
 
         }
@@ -154,9 +145,9 @@ public class KeepInventoryMenu {
             int page
     ) throws SQLException {
 
-        KeepInventoryDAO dao =
+        CreeperSettingsDAO dao =
                 RSServerAdmin.getInstance()
-                        .getKeepInventoryDAO();
+                        .getCreeperSettingsDAO();
 
         List<String> worlds =
                 RSServerAdmin.getInstance()
@@ -183,7 +174,7 @@ public class KeepInventoryMenu {
                     worlds.get(i);
 
             boolean enabled =
-                    dao.getWorldSetting(
+                    dao.getBlockDamage(
                             worldName
                     );
 
@@ -215,11 +206,11 @@ public class KeepInventoryMenu {
 
                 meta.setLore(
                         List.of(
-                                "§7Keep Inventory",
+                                "§7Creeper Block Damage",
                                 "",
                                 enabled
-                                        ? "§aCurrent: Players keep inventory on death"
-                                        : "§cCurrent: Players drop inventory on death"
+                                        ? "§aCurrent: Creepers damage blocks"
+                                        : "§cCurrent: Creepers do not damage blocks"
                         )
                 );
 

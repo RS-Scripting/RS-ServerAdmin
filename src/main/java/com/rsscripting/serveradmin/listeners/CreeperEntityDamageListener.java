@@ -20,22 +20,34 @@ public class CreeperEntityDamageListener implements Listener {
 
         try {
 
-            boolean disableEntityDamage =
+            String worldName =
+                    event.getEntity()
+                            .getWorld()
+                            .getName();
+
+            boolean entityDamageEnabled =
                     RSServerAdmin.getInstance()
-                            .getSettingsDAO()
-                            .getDefault(
-                                    SettingKey.CREEPER_ENTITY_DAMAGE
+                            .getCreeperSettingsDAO()
+                            .getEntityDamage(
+                                    worldName
                             );
 
-            if (!disableEntityDamage) {
+            if (entityDamageEnabled) {
                 return;
             }
 
-            event.setCancelled(true);
+            event.setCancelled(
+                    true
+            );
 
         } catch (Exception ex) {
 
-            ex.printStackTrace();
+            RSServerAdmin.getInstance()
+                    .getLogger()
+                    .warning(
+                            "Failed to process Creeper entity damage: "
+                                    + ex.getMessage()
+                    );
 
         }
 

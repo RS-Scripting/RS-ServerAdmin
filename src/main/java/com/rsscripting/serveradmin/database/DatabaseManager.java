@@ -76,6 +76,16 @@ public class DatabaseManager {
                     """
             );
 
+            statement.execute(
+                    """
+                    CREATE TABLE IF NOT EXISTS creeper_settings (
+                        world_name TEXT PRIMARY KEY,
+                        block_damage INTEGER NOT NULL,
+                        entity_damage INTEGER NOT NULL
+                    )
+                    """
+            );
+
         }
     }
 

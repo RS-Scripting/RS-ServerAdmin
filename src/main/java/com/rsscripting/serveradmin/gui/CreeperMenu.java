@@ -62,14 +62,6 @@ public class CreeperMenu {
 
                 }
 
-                if (disableBlockDamage) {
-
-                    GUIUtils.addGlow(
-                            blockDamage
-                    );
-
-                }
-
                 inventory.setItem(
                         11,
                         blockDamage
@@ -108,14 +100,6 @@ public class CreeperMenu {
 
                     entityDamage.setItemMeta(
                             entityMeta
-                    );
-
-                }
-
-                if (disableEntityDamage) {
-
-                    GUIUtils.addGlow(
-                            entityDamage
                     );
 
                 }

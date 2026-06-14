@@ -4,12 +4,13 @@ import com.rsscripting.serveradmin.database.DatabaseManager;
 import com.rsscripting.serveradmin.database.SettingsDAO;
 import com.rsscripting.serveradmin.commands.RSAdminCommand;
 import com.rsscripting.serveradmin.keepinventory.KeepInventoryDAO;
-import com.rsscripting.serveradmin.listeners.CreeperListener;
+import com.rsscripting.serveradmin.listeners.CreeperBlockDamageListener;
 import com.rsscripting.serveradmin.security.SecurityManager;
 import com.rsscripting.serveradmin.listeners.InventoryListener;
 import com.rsscripting.serveradmin.listeners.CreeperEntityDamageListener;
 import com.rsscripting.serveradmin.update.GitHubUpdateChecker;
 import com.rsscripting.serveradmin.listeners.WorldLoadListener;
+import com.rsscripting.serveradmin.creeper.CreeperSettingsDAO;
 
 import com.rsscripting.serveradmin.settings.SettingKey;
 import com.rsscripting.serveradmin.worlds.WorldsDAO;
@@ -27,6 +28,7 @@ public class RSServerAdmin extends JavaPlugin {
     private SettingsDAO settingsDAO;
     private SecurityManager securityManager;
     private WorldsDAO worldsDAO;
+    private CreeperSettingsDAO creeperSettingsDAO;
 
     @Override
     public void onEnable() {
@@ -41,13 +43,24 @@ public class RSServerAdmin extends JavaPlugin {
 
             databaseManager.connect();
 
-            settingsDAO = new SettingsDAO(databaseManager);
+            settingsDAO = new SettingsDAO(
+                    databaseManager
+            );
 
             settingsDAO.initializeDefaults();
 
-            keepInventoryDAO = new KeepInventoryDAO(databaseManager);
+            keepInventoryDAO = new KeepInventoryDAO(
+                    databaseManager
+            );
 
-            worldsDAO = new WorldsDAO(databaseManager);
+            worldsDAO = new WorldsDAO(
+                    databaseManager
+            );
+
+            creeperSettingsDAO =
+                    new CreeperSettingsDAO(
+                            databaseManager
+                    );
 
             securityManager = new SecurityManager(this);
 
@@ -65,6 +78,22 @@ public class RSServerAdmin extends JavaPlugin {
                 keepInventoryDAO.ensureWorldExists(
                         world.getName(),
                         keepInventoryDefault
+                );
+
+                boolean blockDamageDefault =
+                        settingsDAO.getDefault(
+                                SettingKey.CREEPER_BLOCK_DAMAGE
+                        );
+
+                boolean entityDamageDefault =
+                        settingsDAO.getDefault(
+                                SettingKey.CREEPER_ENTITY_DAMAGE
+                        );
+
+                creeperSettingsDAO.ensureWorldExists(
+                        world.getName(),
+                        blockDamageDefault,
+                        entityDamageDefault
                 );
 
             }
@@ -89,7 +118,7 @@ public class RSServerAdmin extends JavaPlugin {
             );
 
             getServer().getPluginManager().registerEvents(
-                    new CreeperListener(),
+                    new CreeperBlockDamageListener(),
                     this
             );
 
@@ -149,10 +178,14 @@ public class RSServerAdmin extends JavaPlugin {
         return settingsDAO;
     }
     public WorldsDAO getWorldsDAO() {
-        return worldsDAO;}
+        return worldsDAO;
+    }
     public SecurityManager getSecurityManager() {
 
         return securityManager;
+    }
+    public CreeperSettingsDAO getCreeperSettingsDAO() {
+        return creeperSettingsDAO;
     }
 
 }

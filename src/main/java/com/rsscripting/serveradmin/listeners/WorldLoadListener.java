@@ -36,6 +36,25 @@ public class WorldLoadListener implements Listener {
                             keepInventoryDefault
                     );
 
+            boolean blockDamageDefault =
+                    plugin.getSettingsDAO()
+                            .getDefault(
+                                    SettingKey.CREEPER_BLOCK_DAMAGE
+                            );
+
+            boolean entityDamageDefault =
+                    plugin.getSettingsDAO()
+                            .getDefault(
+                                    SettingKey.CREEPER_ENTITY_DAMAGE
+                            );
+
+            plugin.getCreeperSettingsDAO()
+                    .ensureWorldExists(
+                            event.getWorld().getName(),
+                            blockDamageDefault,
+                            entityDamageDefault
+                    );
+
             boolean keepInventoryEnabled =
                     plugin.getKeepInventoryDAO()
                             .getWorldSetting(

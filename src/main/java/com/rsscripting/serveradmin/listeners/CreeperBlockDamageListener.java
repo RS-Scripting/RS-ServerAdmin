@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-public class CreeperListener implements Listener {
+public class CreeperBlockDamageListener implements Listener {
 
     @EventHandler
     public void onEntityExplode(
@@ -20,14 +20,19 @@ public class CreeperListener implements Listener {
 
         try {
 
-            boolean disableBlockDamage =
+            String worldName =
+                    event.getLocation()
+                            .getWorld()
+                            .getName();
+
+            boolean blockDamageEnabled =
                     RSServerAdmin.getInstance()
-                            .getSettingsDAO()
-                            .getDefault(
-                                    SettingKey.CREEPER_BLOCK_DAMAGE
+                            .getCreeperSettingsDAO()
+                            .getBlockDamage(
+                                    worldName
                             );
 
-            if (!disableBlockDamage) {
+            if (blockDamageEnabled) {
                 return;
             }
 
@@ -36,7 +41,12 @@ public class CreeperListener implements Listener {
 
         } catch (Exception ex) {
 
-            ex.printStackTrace();
+            RSServerAdmin.getInstance()
+                    .getLogger()
+                    .warning(
+                            "Failed to process Creeper block damage: "
+                                    + ex.getMessage()
+                    );
 
         }
 
