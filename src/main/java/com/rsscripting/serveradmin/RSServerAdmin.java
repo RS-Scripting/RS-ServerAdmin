@@ -3,12 +3,9 @@ package com.rsscripting.serveradmin;
 import com.rsscripting.serveradmin.dao.*;
 import com.rsscripting.serveradmin.database.DatabaseManager;
 import com.rsscripting.serveradmin.commands.RSAdminCommand;
-import com.rsscripting.serveradmin.listeners.CreeperBlockDamageListener;
+import com.rsscripting.serveradmin.listeners.*;
 import com.rsscripting.serveradmin.security.SecurityManager;
-import com.rsscripting.serveradmin.listeners.InventoryListener;
-import com.rsscripting.serveradmin.listeners.CreeperEntityDamageListener;
 import com.rsscripting.serveradmin.update.GitHubUpdateChecker;
-import com.rsscripting.serveradmin.listeners.WorldLoadListener;
 
 import com.rsscripting.serveradmin.settings.SettingKey;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,7 +23,7 @@ public class RSServerAdmin extends JavaPlugin {
     private SecurityManager securityManager;
     private WorldsDAO worldsDAO;
     private CreeperSettingsDAO creeperSettingsDAO;
-    private EquipmentDropSettingsDAO equipmentDropSettingsDAO;
+    private MobEquipmentDropSettingsDAO equipmentDropSettingsDAO;
 
     @Override
     public void onEnable() {
@@ -61,7 +58,7 @@ public class RSServerAdmin extends JavaPlugin {
                     );
 
             equipmentDropSettingsDAO =
-                    new EquipmentDropSettingsDAO(
+                    new MobEquipmentDropSettingsDAO(
                             databaseManager
                     );
 
@@ -120,7 +117,7 @@ public class RSServerAdmin extends JavaPlugin {
             }
 
             getServer().getPluginManager().registerEvents(
-                    new InventoryListener(),
+                    new MainMenuListener(),
                     this
             );
 
@@ -139,6 +136,25 @@ public class RSServerAdmin extends JavaPlugin {
                     this
             );
 
+            getServer().getPluginManager().registerEvents(
+                    new KeepInventoryListener(),
+                    this
+            );
+
+            getServer().getPluginManager().registerEvents(
+                    new CreeperMenuListener(),
+                    this
+            );
+
+            getServer().getPluginManager().registerEvents(
+                    new MobEquipmentMenuListener(),
+                    this
+            );
+
+            getServer().getPluginManager().registerEvents(
+                    new MobEquipmentDropListener(),
+                    this
+            );
 
         } catch (Exception ex) {
 
@@ -195,7 +211,7 @@ public class RSServerAdmin extends JavaPlugin {
         return creeperSettingsDAO;
     }
 
-    public EquipmentDropSettingsDAO
+    public MobEquipmentDropSettingsDAO
     getEquipmentDropSettingsDAO() {
 
         return equipmentDropSettingsDAO;

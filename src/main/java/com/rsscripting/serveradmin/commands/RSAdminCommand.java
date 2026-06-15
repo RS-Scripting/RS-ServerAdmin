@@ -2,6 +2,7 @@ package com.rsscripting.serveradmin.commands;
 
 import com.rsscripting.serveradmin.RSServerAdmin;
 import com.rsscripting.serveradmin.security.UserRole;
+import com.rsscripting.serveradmin.utils.WorldSyncUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,6 +41,19 @@ public class RSAdminCommand implements CommandExecutor {
             player.sendMessage("§cYou do not have access.");
 
             return true;
+        }
+
+        try {
+
+            WorldSyncUtils.synchronizeWorlds();
+
+        } catch (Exception ex) {
+
+            plugin.getLogger().warning(
+                    "World synchronization failed: "
+                            + ex.getMessage()
+            );
+
         }
 
         player.openInventory(

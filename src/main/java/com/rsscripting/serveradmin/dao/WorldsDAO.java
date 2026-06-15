@@ -1,6 +1,7 @@
 package com.rsscripting.serveradmin.dao;
 
 import com.rsscripting.serveradmin.database.DatabaseManager;
+import com.rsscripting.serveradmin.RSServerAdmin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -87,6 +88,83 @@ public class WorldsDAO {
         }
 
         return worlds;
+
+    }
+
+    public void deleteWorldEverywhere(
+            String worldName
+    ) throws SQLException {
+
+        Connection connection =
+                databaseManager.getConnection();
+
+        try (PreparedStatement statement =
+                     connection.prepareStatement(
+                             """
+                             DELETE FROM worlds
+                             WHERE world_name = ?
+                             """
+                     )) {
+
+            statement.setString(
+                    1,
+                    worldName
+            );
+
+            statement.executeUpdate();
+
+        }
+
+        try (PreparedStatement statement =
+                     connection.prepareStatement(
+                             """
+                             DELETE FROM keep_inventory
+                             WHERE world_name = ?
+                             """
+                     )) {
+
+            statement.setString(
+                    1,
+                    worldName
+            );
+
+            statement.executeUpdate();
+
+        }
+
+        try (PreparedStatement statement =
+                     connection.prepareStatement(
+                             """
+                             DELETE FROM creeper_settings
+                             WHERE world_name = ?
+                             """
+                     )) {
+
+            statement.setString(
+                    1,
+                    worldName
+            );
+
+            statement.executeUpdate();
+
+        }
+
+        try (PreparedStatement statement =
+                     connection.prepareStatement(
+                             """
+                             DELETE FROM equipment_drop_settings
+                             WHERE world_name = ?
+                             """
+                     )) {
+
+            statement.setString(
+                    1,
+                    worldName
+            );
+
+            statement.executeUpdate();
+
+        }
 
     }
 

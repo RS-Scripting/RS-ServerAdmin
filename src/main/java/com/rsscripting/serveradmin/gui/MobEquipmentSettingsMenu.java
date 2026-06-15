@@ -7,6 +7,7 @@ import com.rsscripting.serveradmin.utils.GUIUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -93,7 +94,7 @@ public class MobEquipmentSettingsMenu {
                 Bukkit.createInventory(
                         holder,
                         54,
-                        "Equipment: " + worldName
+                        "Mob Drops: " + worldName
                 );
 
         GUIUtils.fillEmptySlots(
@@ -138,6 +139,37 @@ public class MobEquipmentSettingsMenu {
                         Material.LEATHER_HELMET
                 );
 
+        ItemMeta helmetMeta =
+                helmet.getItemMeta();
+
+        helmetMeta.addItemFlags(
+                ItemFlag.HIDE_ATTRIBUTES
+        );
+
+        if (helmetMeta != null) {
+
+            helmetMeta.setDisplayName(
+                    "§eHelmet"
+            );
+
+            helmetMeta.setLore(
+                    java.util.List.of(
+                            helmetEnabled
+                                    ? "§aCurrent: Mobs will drop helmet if equipped."
+                                    : "§cCurrent: Mobs will not drop helmet if equipped.",
+                            "",
+                            helmetEnabled
+                                    ? "§7Click to Disable"
+                                    : "§7Click to Enable"
+                    )
+            );
+
+            helmet.setItemMeta(
+                    helmetMeta
+            );
+
+        }
+
         if (helmetEnabled) {
 
             GUIUtils.addGlow(
@@ -147,7 +179,7 @@ public class MobEquipmentSettingsMenu {
         }
 
         inventory.setItem(
-                13,
+                22,
                 helmet
         );
 
@@ -160,16 +192,47 @@ public class MobEquipmentSettingsMenu {
                         Material.SHIELD
                 );
 
+        ItemMeta offHandMeta =
+                offHand.getItemMeta();
+
+        offHandMeta.addItemFlags(
+                ItemFlag.HIDE_ATTRIBUTES
+        );
+
+        if (offHandMeta != null) {
+
+            offHandMeta.setDisplayName(
+                    "§eOff Hand"
+            );
+
+            offHandMeta.setLore(
+                    java.util.List.of(
+                            offHandEnabled
+                                    ? "§aCurrent: Mobs will drop held item."
+                                    : "§cCurrent: Mobs will not drop held item.",
+                            "",
+                            offHandEnabled
+                                    ? "§7Click to Disable"
+                                    : "§7Click to Enable"
+                    )
+            );
+
+            offHand.setItemMeta(
+                    offHandMeta
+            );
+
+        }
+
         if (offHandEnabled) {
 
             GUIUtils.addGlow(
-                    offHand
+                   offHand
             );
 
         }
 
         inventory.setItem(
-                20,
+                30,
                 offHand
         );
 
@@ -182,6 +245,37 @@ public class MobEquipmentSettingsMenu {
                         Material.LEATHER_CHESTPLATE
                 );
 
+        ItemMeta chestplateMeta =
+                chestplate.getItemMeta();
+
+        chestplateMeta.addItemFlags(
+                ItemFlag.HIDE_ATTRIBUTES
+        );
+
+        if (chestplateMeta != null) {
+
+            chestplateMeta.setDisplayName(
+                    "§eChestplate"
+            );
+
+            chestplateMeta.setLore(
+                    java.util.List.of(
+                            chestplateEnabled
+                                    ? "§aCurrent: Mobs will drop chestplate if equipped."
+                                    : "§cCurrent: Mobs will not drop chestplate if equipped.",
+                            "",
+                            chestplateEnabled
+                                    ? "§7Click to Disable"
+                                    : "§7Click to Enable"
+                    )
+            );
+
+            chestplate.setItemMeta(
+                    chestplateMeta
+            );
+
+        }
+
         if (chestplateEnabled) {
 
             GUIUtils.addGlow(
@@ -191,7 +285,7 @@ public class MobEquipmentSettingsMenu {
         }
 
         inventory.setItem(
-                21,
+                31,
                 chestplate
         );
 
@@ -204,6 +298,38 @@ public class MobEquipmentSettingsMenu {
                         Material.IRON_SWORD
                 );
 
+        ItemMeta mainHandMeta =
+                mainHand.getItemMeta();
+
+        mainHandMeta.addItemFlags(
+                ItemFlag.HIDE_ATTRIBUTES
+        );
+
+
+        if (mainHandMeta != null) {
+
+            mainHandMeta.setDisplayName(
+                    "§eMain Hand"
+            );
+
+            mainHandMeta.setLore(
+                    java.util.List.of(
+                            mainHandEnabled
+                                    ? "§aCurrent: Mobs will drop held item if equipped."
+                                    : "§cCurrent: Mobs will not drop held item if equipped.",
+                            "",
+                            mainHandEnabled
+                                    ? "§7Click to Disable"
+                                    : "§7Click to Enable"
+                    )
+            );
+
+            mainHand.setItemMeta(
+                    mainHandMeta
+            );
+
+        }
+
         if (mainHandEnabled) {
 
             GUIUtils.addGlow(
@@ -213,7 +339,7 @@ public class MobEquipmentSettingsMenu {
         }
 
         inventory.setItem(
-                22,
+                32,
                 mainHand
         );
 
@@ -226,6 +352,38 @@ public class MobEquipmentSettingsMenu {
                         Material.LEATHER_LEGGINGS
                 );
 
+        ItemMeta leggingsMeta =
+                leggings.getItemMeta();
+
+        leggingsMeta.addItemFlags(
+                ItemFlag.HIDE_ATTRIBUTES
+        );
+
+
+        if (mainHandMeta != null) {
+
+            leggingsMeta.setDisplayName(
+                    "§eLeggings"
+            );
+
+            leggingsMeta.setLore(
+                    java.util.List.of(
+                            leggingsEnabled
+                                    ? "§aCurrent: Mobs will drop leggings if equipped."
+                                    : "§cCurrent: Mobs will not drop leggings if equipped.",
+                            "",
+                            leggingsEnabled
+                                    ? "§7Click to Disable"
+                                    : "§7Click to Enable"
+                    )
+            );
+
+            leggings.setItemMeta(
+                    leggingsMeta
+            );
+
+        }
+
         if (leggingsEnabled) {
 
             GUIUtils.addGlow(
@@ -235,7 +393,7 @@ public class MobEquipmentSettingsMenu {
         }
 
         inventory.setItem(
-                29,
+                40,
                 leggings
         );
 
@@ -248,6 +406,38 @@ public class MobEquipmentSettingsMenu {
                         Material.LEATHER_BOOTS
                 );
 
+        ItemMeta bootsMeta =
+                boots.getItemMeta();
+
+        bootsMeta.addItemFlags(
+                ItemFlag.HIDE_ATTRIBUTES
+        );
+
+
+        if (bootsMeta != null) {
+
+            bootsMeta.setDisplayName(
+                    "§eBoots"
+            );
+
+            bootsMeta.setLore(
+                    java.util.List.of(
+                            bootsEnabled
+                                    ? "§aCurrent: Mobs will drop boots if equipped."
+                                    : "§cCurrent: Mobs will not drop boots if equipped.",
+                            "",
+                            bootsEnabled
+                                    ? "§7Click to Disable"
+                                    : "§7Click to Enable"
+                    )
+            );
+
+            boots.setItemMeta(
+                    bootsMeta
+            );
+
+        }
+
         if (bootsEnabled) {
 
             GUIUtils.addGlow(
@@ -257,7 +447,7 @@ public class MobEquipmentSettingsMenu {
         }
 
         inventory.setItem(
-                37,
+                49,
                 boots
         );
 

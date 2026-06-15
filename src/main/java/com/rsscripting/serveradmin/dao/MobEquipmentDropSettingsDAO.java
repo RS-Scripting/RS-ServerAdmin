@@ -7,11 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EquipmentDropSettingsDAO {
+public class MobEquipmentDropSettingsDAO {
 
     private final DatabaseManager databaseManager;
 
-    public EquipmentDropSettingsDAO(
+    public MobEquipmentDropSettingsDAO(
             DatabaseManager databaseManager
     ) {
 
