@@ -1,4 +1,4 @@
-package com.rsscripting.serveradmin.gui;
+package com.rsscripting.serveradmin.utils;
 
 import java.util.ArrayList;
 import java.util.List;

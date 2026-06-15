@@ -1,8 +1,10 @@
 package com.rsscripting.serveradmin.gui;
 
 import com.rsscripting.serveradmin.RSServerAdmin;
+import com.rsscripting.serveradmin.menuholder.RSMenuHolder;
 import com.rsscripting.serveradmin.settings.SettingKey;
 
+import com.rsscripting.serveradmin.utils.GUIUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -111,13 +113,22 @@ public class CreeperMenu {
 
             } catch (Exception ex) {
 
-                ex.printStackTrace();
+                RSServerAdmin.getInstance()
+                        .getLogger()
+                        .warning(
+                                "Failed to build Creeper menu: "
+                                        + ex.getMessage()
+                        );
 
             }
 
         } catch (Exception ex) {
-
-            ex.printStackTrace();
+            RSServerAdmin.getInstance()
+                    .getLogger()
+                    .warning(
+                            "Failed to build Creeper menu: "
+                                    + ex.getMessage()
+                    );
 
         }
 

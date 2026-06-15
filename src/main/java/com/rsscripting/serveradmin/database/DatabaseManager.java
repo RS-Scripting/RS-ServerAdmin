@@ -22,7 +22,15 @@ public class DatabaseManager {
         File dataFolder = plugin.getDataFolder();
 
         if (!dataFolder.exists()) {
-            dataFolder.mkdirs();
+
+            if (!dataFolder.mkdirs()) {
+
+                throw new SQLException(
+                        "Failed to create plugin data folder."
+                );
+
+            }
+
         }
 
         File databaseFile = new File(
@@ -82,6 +90,20 @@ public class DatabaseManager {
                         world_name TEXT PRIMARY KEY,
                         block_damage INTEGER NOT NULL,
                         entity_damage INTEGER NOT NULL
+                    )
+                    """
+            );
+
+            statement.execute(
+                    """
+                    CREATE TABLE IF NOT EXISTS equipment_drop_settings (
+                        world_name TEXT PRIMARY KEY,
+                        helmet INTEGER NOT NULL,
+                        chestplate INTEGER NOT NULL,
+                        leggings INTEGER NOT NULL,
+                        boots INTEGER NOT NULL,
+                        main_hand INTEGER NOT NULL,
+                        off_hand INTEGER NOT NULL
                     )
                     """
             );

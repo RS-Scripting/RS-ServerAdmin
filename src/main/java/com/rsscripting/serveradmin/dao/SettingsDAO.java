@@ -1,5 +1,6 @@
-package com.rsscripting.serveradmin.database;
+package com.rsscripting.serveradmin.dao;
 
+import com.rsscripting.serveradmin.database.DatabaseManager;
 import com.rsscripting.serveradmin.settings.SettingKey;
 
 import java.sql.Connection;
@@ -50,9 +51,9 @@ public class SettingsDAO {
             case KEEP_INVENTORY -> true;
 
             case CREEPER_BLOCK_DAMAGE,
-                 CREEPER_ENTITY_DAMAGE -> false;
+                 CREEPER_ENTITY_DAMAGE,
+                 KEEP_INVENTORY_NEW_WORLD -> false;
 
-            case KEEP_INVENTORY_NEW_WORLD -> false;
         };
     }
 

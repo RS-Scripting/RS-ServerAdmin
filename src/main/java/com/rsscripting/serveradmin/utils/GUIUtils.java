@@ -1,4 +1,4 @@
-package com.rsscripting.serveradmin.gui;
+package com.rsscripting.serveradmin.utils;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;

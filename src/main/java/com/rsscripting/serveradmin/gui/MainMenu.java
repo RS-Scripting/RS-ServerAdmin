@@ -1,9 +1,7 @@
 package com.rsscripting.serveradmin.gui;
 
-import com.rsscripting.serveradmin.gui.GUIUtils;
-import com.rsscripting.serveradmin.gui.RSMenuHolder;
-import com.rsscripting.serveradmin.gui.KeepInventoryMenu;
-
+import com.rsscripting.serveradmin.menuholder.RSMenuHolder;
+import com.rsscripting.serveradmin.utils.GUIUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -56,6 +54,31 @@ public class MainMenu {
         inventory.setItem(4, scanWorlds);
 
         inventory.setItem(11, creeper);
+
+        ItemStack mobDrops =
+                new ItemStack(
+                        Material.SKELETON_SKULL
+                );
+
+        ItemMeta mobDropsMeta =
+                mobDrops.getItemMeta();
+
+        if (mobDropsMeta != null) {
+
+            mobDropsMeta.setDisplayName(
+                    "§aMob Equipment Drops"
+            );
+
+            mobDrops.setItemMeta(
+                    mobDropsMeta
+            );
+
+        }
+
+        inventory.setItem(
+                13,
+                mobDrops
+        );
 
         ItemStack keepInventory =
                 new ItemStack(Material.CHEST);

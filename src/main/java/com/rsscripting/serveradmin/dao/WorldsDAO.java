@@ -1,4 +1,4 @@
-package com.rsscripting.serveradmin.worlds;
+package com.rsscripting.serveradmin.dao;
 
 import com.rsscripting.serveradmin.database.DatabaseManager;
 

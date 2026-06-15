@@ -1,7 +1,6 @@
 package com.rsscripting.serveradmin.listeners;
 
 import com.rsscripting.serveradmin.RSServerAdmin;
-import com.rsscripting.serveradmin.settings.SettingKey;
 import org.bukkit.entity.Creeper;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

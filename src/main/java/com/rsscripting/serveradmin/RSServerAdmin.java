@@ -1,19 +1,16 @@
 package com.rsscripting.serveradmin;
 
+import com.rsscripting.serveradmin.dao.*;
 import com.rsscripting.serveradmin.database.DatabaseManager;
-import com.rsscripting.serveradmin.database.SettingsDAO;
 import com.rsscripting.serveradmin.commands.RSAdminCommand;
-import com.rsscripting.serveradmin.keepinventory.KeepInventoryDAO;
 import com.rsscripting.serveradmin.listeners.CreeperBlockDamageListener;
 import com.rsscripting.serveradmin.security.SecurityManager;
 import com.rsscripting.serveradmin.listeners.InventoryListener;
 import com.rsscripting.serveradmin.listeners.CreeperEntityDamageListener;
 import com.rsscripting.serveradmin.update.GitHubUpdateChecker;
 import com.rsscripting.serveradmin.listeners.WorldLoadListener;
-import com.rsscripting.serveradmin.creeper.CreeperSettingsDAO;
 
 import com.rsscripting.serveradmin.settings.SettingKey;
-import com.rsscripting.serveradmin.worlds.WorldsDAO;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -29,6 +26,7 @@ public class RSServerAdmin extends JavaPlugin {
     private SecurityManager securityManager;
     private WorldsDAO worldsDAO;
     private CreeperSettingsDAO creeperSettingsDAO;
+    private EquipmentDropSettingsDAO equipmentDropSettingsDAO;
 
     @Override
     public void onEnable() {
@@ -59,6 +57,11 @@ public class RSServerAdmin extends JavaPlugin {
 
             creeperSettingsDAO =
                     new CreeperSettingsDAO(
+                            databaseManager
+                    );
+
+            equipmentDropSettingsDAO =
+                    new EquipmentDropSettingsDAO(
                             databaseManager
                     );
 
@@ -94,6 +97,10 @@ public class RSServerAdmin extends JavaPlugin {
                         world.getName(),
                         blockDamageDefault,
                         entityDamageDefault
+                );
+
+                equipmentDropSettingsDAO.ensureWorldExists(
+                        world.getName()
                 );
 
             }
@@ -186,6 +193,13 @@ public class RSServerAdmin extends JavaPlugin {
     }
     public CreeperSettingsDAO getCreeperSettingsDAO() {
         return creeperSettingsDAO;
+    }
+
+    public EquipmentDropSettingsDAO
+    getEquipmentDropSettingsDAO() {
+
+        return equipmentDropSettingsDAO;
+
     }
 
 }

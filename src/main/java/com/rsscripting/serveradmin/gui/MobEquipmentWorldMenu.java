@@ -1,11 +1,10 @@
 package com.rsscripting.serveradmin.gui;
 
 import com.rsscripting.serveradmin.RSServerAdmin;
-import com.rsscripting.serveradmin.dao.CreeperSettingsDAO;
 import com.rsscripting.serveradmin.menuholder.RSMenuHolder;
-import com.rsscripting.serveradmin.settings.SettingKey;
 import com.rsscripting.serveradmin.utils.GUIUtils;
 import com.rsscripting.serveradmin.utils.MenuLayoutUtils;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -17,7 +16,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CreeperEntityDamageMenu {
+public class MobEquipmentWorldMenu {
 
     private static final int WORLDS_PER_PAGE = 45;
 
@@ -27,7 +26,7 @@ public class CreeperEntityDamageMenu {
 
         RSMenuHolder holder =
                 new RSMenuHolder(
-                        "CREEPER_ENTITY_DAMAGE"
+                        "MOB_EQUIPMENT_WORLDS"
                 );
 
         holder.setPage(
@@ -38,7 +37,7 @@ public class CreeperEntityDamageMenu {
                 Bukkit.createInventory(
                         holder,
                         54,
-                        "Entity Damage"
+                        "Mob Equipment Drops"
                 );
 
         GUIUtils.fillEmptySlots(
@@ -46,10 +45,6 @@ public class CreeperEntityDamageMenu {
         );
 
         createBackButton(
-                inventory
-        );
-
-        createDefaultButton(
                 inventory
         );
 
@@ -87,57 +82,7 @@ public class CreeperEntityDamageMenu {
         }
 
         inventory.setItem(
-                3,
-                item
-        );
-
-    }
-
-    private static void createDefaultButton(
-            Inventory inventory
-    ) throws SQLException {
-
-        boolean enabled =
-                RSServerAdmin.getInstance()
-                        .getSettingsDAO()
-                        .getDefault(
-                                SettingKey.CREEPER_ENTITY_DAMAGE
-                        );
-
-        ItemStack item =
-                new ItemStack(
-                        enabled
-                                ? Material.ENDER_CHEST
-                                : Material.CHEST
-                );
-
-        ItemMeta meta =
-                item.getItemMeta();
-
-        if (meta != null) {
-
-            meta.setDisplayName(
-                    "§eDefault For New Worlds"
-            );
-
-            meta.setLore(
-                    List.of(
-                            "§7Controls newly detected worlds",
-                            "",
-                            enabled
-                                    ? "§aCurrent: New worlds allow creeper entity damage"
-                                    : "§cCurrent: New worlds block creeper entity damage"
-                    )
-            );
-
-            item.setItemMeta(
-                    meta
-            );
-
-        }
-
-        inventory.setItem(
-                5,
+                4,
                 item
         );
 
@@ -147,10 +92,6 @@ public class CreeperEntityDamageMenu {
             Inventory inventory,
             int page
     ) throws SQLException {
-
-        CreeperSettingsDAO dao =
-                RSServerAdmin.getInstance()
-                        .getCreeperSettingsDAO();
 
         List<String> worlds =
                 RSServerAdmin.getInstance()
@@ -176,16 +117,9 @@ public class CreeperEntityDamageMenu {
             String worldName =
                     worlds.get(i);
 
-            boolean enabled =
-                    dao.getEntityDamage(
-                            worldName
-                    );
-
             ItemStack item =
                     new ItemStack(
-                            enabled
-                                    ? Material.LIME_SHULKER_BOX
-                                    : Material.RED_SHULKER_BOX
+                            Material.SKELETON_SKULL
                     );
 
             ItemMeta meta =
@@ -209,11 +143,7 @@ public class CreeperEntityDamageMenu {
 
                 meta.setLore(
                         List.of(
-                                "§7Creeper Entity Damage",
-                                "",
-                                enabled
-                                        ? "§aCurrent: Creepers damage entities"
-                                        : "§cCurrent: Creepers do not damage entities"
+                                "§7Configure equipment drops"
                         )
                 );
 
@@ -269,5 +199,7 @@ public class CreeperEntityDamageMenu {
             );
 
         }
+
     }
+
 }

@@ -2,8 +2,11 @@ package com.rsscripting.serveradmin.listeners;
 
 import com.rsscripting.serveradmin.gui.*;
 import com.rsscripting.serveradmin.RSServerAdmin;
+import com.rsscripting.serveradmin.menuholder.RSMenuHolder;
 import com.rsscripting.serveradmin.settings.SettingKey;
-import com.rsscripting.serveradmin.keepinventory.KeepInventoryDAO;
+import com.rsscripting.serveradmin.dao.KeepInventoryDAO;
+import com.rsscripting.serveradmin.gui.MobEquipmentWorldMenu;
+import com.rsscripting.serveradmin.gui.MobEquipmentSettingsMenu;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -60,6 +63,20 @@ public class InventoryListener implements Listener {
                                                     SettingKey.KEEP_INVENTORY_NEW_WORLD
                                             );
 
+                            boolean blockDamageDefault =
+                                    RSServerAdmin.getInstance()
+                                            .getSettingsDAO()
+                                            .getDefault(
+                                                    SettingKey.CREEPER_BLOCK_DAMAGE
+                                            );
+
+                            boolean entityDamageDefault =
+                                    RSServerAdmin.getInstance()
+                                            .getSettingsDAO()
+                                            .getDefault(
+                                                    SettingKey.CREEPER_ENTITY_DAMAGE
+                                            );
+
                             for (org.bukkit.World world
                                     : org.bukkit.Bukkit.getWorlds()) {
 
@@ -76,6 +93,20 @@ public class InventoryListener implements Listener {
                                                 keepInventoryDefault
                                         );
 
+                                RSServerAdmin.getInstance()
+                                        .getCreeperSettingsDAO()
+                                        .ensureWorldExists(
+                                                world.getName(),
+                                                blockDamageDefault,
+                                                entityDamageDefault
+                                        );
+
+                                RSServerAdmin.getInstance()
+                                        .getEquipmentDropSettingsDAO()
+                                        .ensureWorldExists(
+                                                world.getName()
+                                        );
+
                             }
 
                             player.sendMessage(
@@ -84,11 +115,43 @@ public class InventoryListener implements Listener {
 
                         } catch (Exception ex) {
 
-                            ex.printStackTrace();
+                            RSServerAdmin.getInstance()
+                                    .getLogger()
+                                    .warning(
+                                            "World scan failed: "
+                                                    + ex.getMessage()
+                                    );
 
                             player.sendMessage(
                                     "§cWorld scan failed."
                             );
+
+                        }
+
+                    }
+
+                    /*
+                    | Mob Inventory Drop
+                     */
+
+                    case 13 -> {
+
+                        try {
+
+                            player.openInventory(
+                                    MobEquipmentWorldMenu.create(
+                                            1
+                                    )
+                            );
+
+                        } catch (Exception ex) {
+
+                            RSServerAdmin.getInstance()
+                                    .getLogger()
+                                    .warning(
+                                            "Failed to open Mob Equipment menu: "
+                                                    + ex.getMessage()
+                                    );
 
                         }
 
@@ -118,7 +181,12 @@ public class InventoryListener implements Listener {
 
                         } catch (Exception ex) {
 
-                            ex.printStackTrace();
+                            RSServerAdmin.getInstance()
+                                    .getLogger()
+                                    .warning(
+                                            "Failed to open Keep Inventory menu: "
+                                                    + ex.getMessage()
+                                    );
 
                         }
 
@@ -228,7 +296,12 @@ public class InventoryListener implements Listener {
 
                         } catch (Exception ex) {
 
-                            ex.printStackTrace();
+                            RSServerAdmin.getInstance()
+                                    .getLogger()
+                                    .warning(
+                                            "Failed to update Keep Inventory default: "
+                                                    + ex.getMessage()
+                                    );
 
                         }
 
@@ -311,7 +384,12 @@ public class InventoryListener implements Listener {
 
                         } catch (Exception ex) {
 
-                            ex.printStackTrace();
+                            RSServerAdmin.getInstance()
+                                    .getLogger()
+                                    .warning(
+                                            "Failed to update Keep Inventory world setting: "
+                                                    + ex.getMessage()
+                                    );
 
                         }
 
@@ -582,6 +660,120 @@ public class InventoryListener implements Listener {
                                     .getLogger()
                                     .warning(
                                             "Failed to update Creeper Entity Damage setting: "
+                                                    + ex.getMessage()
+                                    );
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            case "MOB_EQUIPMENT" -> {
+
+                if (!(event.getWhoClicked() instanceof Player player)) {
+                    return;
+                }
+
+                switch (event.getSlot()) {
+
+                    case 4 -> player.openInventory(
+                            MainMenu.create()
+                    );
+
+                }
+
+            }
+
+            case "MOB_EQUIPMENT_WORLDS" -> {
+
+                if (!(event.getWhoClicked() instanceof Player player)) {
+                    return;
+                }
+
+                switch (event.getSlot()) {
+
+                    case 4 -> {
+
+                        player.openInventory(
+                                MainMenu.create()
+                        );
+
+                    }
+
+                    default -> {
+
+                        if (event.getCurrentItem() == null) {
+                            return;
+                        }
+
+                        if (!event.getCurrentItem().hasItemMeta()) {
+                            return;
+                        }
+
+                        ItemMeta meta =
+                                event.getCurrentItem()
+                                        .getItemMeta();
+
+                        if (meta == null) {
+                            return;
+                        }
+
+                        String worldName =
+                                meta.getPersistentDataContainer()
+                                        .get(
+                                                new NamespacedKey(
+                                                        RSServerAdmin.getInstance(),
+                                                        "world_name"
+                                                ),
+                                                PersistentDataType.STRING
+                                        );
+
+                        if (worldName == null
+                                || worldName.isBlank()) {
+
+                            return;
+
+                        }
+
+                        player.openInventory(
+                                MobEquipmentSettingsMenu.create(
+                                        worldName
+                                )
+                        );
+
+                    }
+
+                }
+
+            }
+
+            case "MOB_EQUIPMENT_SETTINGS" -> {
+
+                if (!(event.getWhoClicked() instanceof Player player)) {
+                    return;
+                }
+
+                switch (event.getSlot()) {
+
+                    case 4 -> {
+
+                        try {
+
+                            player.openInventory(
+                                    MobEquipmentWorldMenu.create(
+                                            1
+                                    )
+                            );
+
+                        } catch (Exception ex) {
+
+                            RSServerAdmin.getInstance()
+                                    .getLogger()
+                                    .warning(
+                                            "Failed to open Mob Equipment world menu: "
                                                     + ex.getMessage()
                                     );
 

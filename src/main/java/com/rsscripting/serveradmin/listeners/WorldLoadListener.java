@@ -55,6 +55,11 @@ public class WorldLoadListener implements Listener {
                             entityDamageDefault
                     );
 
+            plugin.getEquipmentDropSettingsDAO()
+                    .ensureWorldExists(
+                            event.getWorld().getName()
+                    );
+
             boolean keepInventoryEnabled =
                     plugin.getKeepInventoryDAO()
                             .getWorldSetting(
@@ -68,7 +73,14 @@ public class WorldLoadListener implements Listener {
 
         } catch (Exception ex) {
 
-            ex.printStackTrace();
+            RSServerAdmin.getInstance()
+                    .getLogger()
+                    .warning(
+                            "Failed to register world settings for "
+                                    + event.getWorld().getName()
+                                    + ": "
+                                    + ex.getMessage()
+                    );
 
         }
 

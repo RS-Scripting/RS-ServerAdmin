@@ -1,4 +1,4 @@
-package com.rsscripting.serveradmin.gui;
+package com.rsscripting.serveradmin.menuholder;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -10,6 +10,8 @@ public class RSMenuHolder
     private final String menuId;
 
     private int page = 1;
+
+    private String worldName;
 
     public RSMenuHolder(
             String menuId
@@ -42,6 +44,20 @@ public class RSMenuHolder
         }
 
         this.page = page;
+
+    }
+
+    public String getWorldName() {
+
+        return worldName;
+
+    }
+
+    public void setWorldName(
+            String worldName
+    ) {
+
+        this.worldName = worldName;
 
     }
 

@@ -1,4 +1,4 @@
-package com.rsscripting.serveradmin.keepinventory;
+package com.rsscripting.serveradmin.dao;
 
 import com.rsscripting.serveradmin.database.DatabaseManager;
 
@@ -136,43 +136,6 @@ public class KeepInventoryDAO {
             statement.executeUpdate();
 
         }
-
-    }
-
-    public java.util.List<String> getAllWorlds()
-            throws SQLException {
-
-        java.util.List<String> worlds =
-                new java.util.ArrayList<>();
-
-        Connection connection =
-                databaseManager.getConnection();
-
-        try (PreparedStatement statement =
-                     connection.prepareStatement(
-                             """
-                             SELECT world_name
-                             FROM keep_inventory
-                             ORDER BY world_name
-                             """
-                     );
-
-             ResultSet rs =
-                     statement.executeQuery()) {
-
-            while (rs.next()) {
-
-                worlds.add(
-                        rs.getString(
-                                "world_name"
-                        )
-                );
-
-            }
-
-        }
-
-        return worlds;
 
     }
 
