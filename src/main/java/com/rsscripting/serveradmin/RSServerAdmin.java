@@ -24,6 +24,7 @@ public class RSServerAdmin extends JavaPlugin {
     private WorldsDAO worldsDAO;
     private CreeperSettingsDAO creeperSettingsDAO;
     private MobEquipmentDropSettingsDAO equipmentDropSettingsDAO;
+    private GitHubUpdateChecker gitHubUpdateChecker;
 
     @Override
     public void onEnable() {
@@ -156,6 +157,11 @@ public class RSServerAdmin extends JavaPlugin {
                     this
             );
 
+            getServer().getPluginManager().registerEvents(
+                    new UpdateNotificationListener(),
+                    this
+            );
+
         } catch (Exception ex) {
 
             getLogger().log(
@@ -169,9 +175,12 @@ public class RSServerAdmin extends JavaPlugin {
             return;
         }
 
-        new GitHubUpdateChecker(
-                this
-        ).checkForUpdates();
+        gitHubUpdateChecker =
+                new GitHubUpdateChecker(
+                        this
+                );
+
+        gitHubUpdateChecker.checkForUpdates();
 
         getLogger().info("RS-ServerAdmin enabled.");
     }
@@ -215,6 +224,11 @@ public class RSServerAdmin extends JavaPlugin {
     getEquipmentDropSettingsDAO() {
 
         return equipmentDropSettingsDAO;
+
+    }
+    public GitHubUpdateChecker getGitHubUpdateChecker() {
+
+        return gitHubUpdateChecker;
 
     }
 

@@ -11,6 +11,8 @@ public class GitHubUpdateChecker {
 
     private final JavaPlugin plugin;
     private final String pomUrl;
+    private volatile boolean updateAvailable = false;
+    private volatile String latestVersion = null;
 
     private static final String POM_URL =
             "https://raw.githubusercontent.com/RS-Scripting/RS-ServerAdmin/main/pom.xml";
@@ -55,11 +57,18 @@ public class GitHubUpdateChecker {
                                         latestVersion
                                 )) {
 
+                                    updateAvailable = false;
+
                                     plugin.getLogger().info(
                                             "RS-ServerAdmin is up to date."
                                     );
 
                                 } else {
+
+                                    updateAvailable = true;
+
+                                    this.latestVersion =
+                                            latestVersion;
 
                                     plugin.getLogger().warning(
                                             "Update available! Current: "
@@ -115,6 +124,18 @@ public class GitHubUpdateChecker {
                 .item(0)
                 .getTextContent()
                 .trim();
+
+    }
+
+    public boolean isUpdateAvailable() {
+
+        return updateAvailable;
+
+    }
+
+    public String getLatestVersionFound() {
+
+        return latestVersion;
 
     }
 
