@@ -37,11 +37,11 @@ public class UpdateNotificationListener
         }
 
         player.sendMessage(
-                ChatColor.YELLOW
+                ChatColor.GREEN
                         + "[RS-ServerAdmin] "
                         + ChatColor.GOLD
                         + "Update Available! "
-                        + ChatColor.GRAY
+                        + ChatColor.GREEN
                         + "Current: "
                         + RSServerAdmin.getInstance()
                         .getDescription()
