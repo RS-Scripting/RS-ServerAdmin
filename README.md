@@ -1,69 +1,122 @@
+<div align="center">
+
 # RS-ServerAdmin
 
-> ⚠️ **WARNING: EARLY DEVELOPMENT PROJECT** ⚠️
->
-> **RS-ServerAdmin is currently under active development and is NOT ready for production use.**
->
-> This repository exists to track development progress, source code, testing, and future planning. Features are incomplete, may change without notice, and should be considered experimental until an official release is announced.
+### Per-World Administrative Controls for Modern Minecraft Servers
 
-## Current Status
+![Minecraft](https://img.shields.io/badge/Minecraft-1.21%2B-green)
+![Platform](https://img.shields.io/badge/Platform-Paper-orange)
+![Storage](https://img.shields.io/badge/Storage-SQLite-blue)
+![Status](https://img.shields.io/badge/Status-Stable-success)
+![Development](https://img.shields.io/badge/Development-Active-brightgreen)
+![RS Ecosystem](https://img.shields.io/badge/RS-Ecosystem-purple)
 
-**Development Stage:** Pre-Release / Work In Progress
-
-The plugin is actively being developed and core systems are still being implemented, tested, and refined.
-
-### Current Progress
-
-* SQLite database framework
-* Security framework
-* Admin access management
-* GUI framework
-* Creeper settings system
-* Keep Inventory framework (in progress)
-* GitHub update checker integration
-
-### In Development
-
-* World management framework
-* World-specific Keep Inventory controls
-* Additional server administration tools
-* Expanded settings management
-* Additional gameplay controls
-
-### Planned Features
-
-* World-specific administration settings
-* Gamerule management
-* Administrative utilities
-* Server management tools
-* Expanded GUI-driven configuration
-
-## Important Notice
-
-**Do NOT use this plugin on a production server.**
-
-Database structures, configuration files, commands, permissions, and features may change at any time during development.
-
-Backward compatibility is **not guaranteed** until the first official release.
-
-## Testing Environment
-
-Currently tested on:
-
-* Paper 1.21.x
-* Java 21
-
-## Contributors
-
-* Big Pappa
-* Atlas
-
-## Releases
-
-There are currently **no public releases** available.
-
-Official releases, documentation, and support information will be added once the project reaches a stable release state.
+</div>
 
 ---
 
-**Repository Status:** 🚧 Active Development 🚧
+## Overview
+
+**RS-ServerAdmin** provides powerful per-world administrative controls for Minecraft servers running Paper.
+
+Server owners can independently configure gameplay rules and administrative settings for each world through intuitive GUI menus without editing configuration files or running commands.
+
+Built with simplicity, scalability, and long-term server management in mind.
+
+---
+
+## Why RS-ServerAdmin?
+
+Managing multiple worlds often creates challenges such as:
+
+* Different gameplay rules for different worlds
+* Manual configuration management
+* World-specific administration requirements
+* Growing server complexity
+* Difficulty keeping settings synchronized
+
+RS-ServerAdmin provides a centralized solution that allows administrators to configure and manage world-specific settings through a clean and consistent interface.
+
+---
+
+# Features
+
+### Keep Inventory Management
+
+Control Keep Inventory independently for every world.
+
+* Per-world configuration
+* Immediate application
+* Automatic support for newly created worlds
+
+### Creeper Controls
+
+Configure creeper behavior separately for each world.
+
+#### Creeper Block Damage
+
+Enable or disable block damage caused by creeper explosions.
+
+#### Creeper Entity Damage
+
+Enable or disable damage to entities caused by creeper explosions.
+
+### Mob Equipment Drops
+
+Control whether equipped mob items are guaranteed to drop on death.
+
+Supported equipment slots:
+
+* Helmet
+* Chestplate
+* Leggings
+* Boots
+* Main Hand
+* Off Hand
+
+### Automatic World Synchronization
+
+RS-ServerAdmin automatically synchronizes its database with active worlds.
+
+### Update Notifications
+
+Server operators are automatically notified when updates are available.
+
+---
+
+# Commands
+
+| Command | Description |
+|----------|-------------|
+| `/rsadmin` | Opens the main administration menu |
+
+---
+
+# Contributors
+
+### Big Pappa
+
+Project Creator  
+Founder of RSScripting
+
+### Atlas
+
+Architecture, Design & Development Support
+
+---
+
+# License
+
+MIT License
+
+See the LICENSE file for details.
+
+---
+
+<p align="center">
+  Built by RSScripting
+</p>
+
+<p align="center">
+  Manage • Generate • Collect • Transport • Store
+</p>
