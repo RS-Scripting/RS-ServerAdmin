@@ -4,6 +4,7 @@ import com.rsscripting.serveradmin.RSServerAdmin;
 import com.rsscripting.serveradmin.dao.MobEquipmentDropSettingsDAO;
 
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -19,6 +20,24 @@ public class MobEquipmentDropListener implements Listener {
 
         LivingEntity entity =
                 event.getEntity();
+
+        /*
+         * Prevent player equipment duplication.
+         */
+        if (entity instanceof Player) {
+            return;
+        }
+
+        /*
+         * Only apply forced equipment drops when a player
+         * actually killed the mob.
+         */
+        Player killer =
+                entity.getKiller();
+
+        if (killer == null) {
+            return;
+        }
 
         EntityEquipment equipment =
                 entity.getEquipment();
