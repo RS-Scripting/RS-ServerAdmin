@@ -61,6 +61,10 @@ Enable or disable block damage caused by creeper explosions.
 
 Enable or disable damage to entities caused by creeper explosions.
 
+#### All Mobs Peaceful
+
+Keep all mobs peaceful. No targeting of players.
+
 ### Mob Equipment Drops
 
 Control whether equipped mob items are guaranteed to drop on death.
