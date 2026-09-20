@@ -61,6 +61,10 @@ Enable or disable block damage caused by creeper explosions.
 
 Enable or disable damage to entities caused by creeper explosions.
 
+#### Creeper Disable Fuse
+
+Enable or disable Creepers ability to ignite their fuse.  They will ignite for a second then disable.
+
 #### All Mobs Peaceful
 
 Keep all mobs peaceful. No targeting of players.
